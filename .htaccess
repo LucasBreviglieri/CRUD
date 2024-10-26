@@ -1,0 +1,26 @@
+# Habilitar a reescrita de URL
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Redirecionar para a página inicial
+    RewriteRule ^$ index.php [L]
+
+    # Reescrever URLs amigáveis
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php?pag=$1 [L,QSA]
+</IfModule>
+
+# Proteger arquivos sensíveis
+<FilesMatch "\.(htaccess|htpasswd|ini|phar|sh)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Definir um tipo de arquivo padrão
+DirectoryIndex index.php
+
+# Habilitar compressão gzip (opcional)
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript
+</IfModule>
